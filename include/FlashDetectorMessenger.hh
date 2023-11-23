@@ -39,26 +39,23 @@ class G4UIcmdWithoutParameter;
 class G4UIcmdWithAString;
 class G4UIcmdWithADoubleAndUnit;        
 
-class FlashDetectorMessenger: public G4UImessenger
-{
-public:
-  FlashDetectorMessenger(FlashDetectorConstruction* );
-  ~FlashDetectorMessenger();
+class FlashDetectorMessenger: public G4UImessenger {
+    public:
+        FlashDetectorMessenger(FlashDetectorConstruction* );
+        ~FlashDetectorMessenger();
+          
+        void SetNewValue(G4UIcommand*, G4String);
     
-  void SetNewValue(G4UIcommand*, G4String);
-    
-private:
+    private:
 
-  // Pointer to the phantom/detector 
-  FlashDetectorConstruction* flashDetector;
+      // Pointer to the phantom/detector 
+      FlashDetectorConstruction* flashDetector;
 
-  G4UIdirectory *fChangeThePhantomDir,  *fChangeTheDetectorDir;
+      G4UIdirectory *fChangeThePhantomDir,  *fChangeTheDetectorDir;
 
-  G4UIcmdWithoutParameter   *fUpdateCmd, *fUpdateCmd_d;
-  G4UIcmdWithAString        *fChangeThePhantomMaterialCmd, *fChangeTheDetectorMaterialCmd; 
+      G4UIcmdWithoutParameter   *fUpdateCmd, *fUpdateCmd_d;
+      G4UIcmdWithAString        *fChangeThePhantomMaterialCmd, *fChangeTheDetectorMaterialCmd; 
 
- 
-    
-};
+    };
 #endif
 

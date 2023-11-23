@@ -33,12 +33,12 @@
 #include "G4VUserActionInitialization.hh"
 
 class FlashActionInitialization : public G4VUserActionInitialization {
-public:
-  FlashActionInitialization();
-  virtual ~FlashActionInitialization();
+    public:
+        FlashActionInitialization();
+        virtual ~FlashActionInitialization();
 
-  virtual void BuildForMaster() const;
-  virtual void Build() const;
-};
+        virtual void BuildForMaster() const;
+        virtual void Build() const;
+    };
 
 #endif

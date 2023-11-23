@@ -52,78 +52,75 @@ class FlashDetectorMessenger;
 
 
 class FlashDetectorConstruction : public G4VUserDetectorConstruction {
-public:
-  G4VPhysicalVolume *physicalTreatmentRoom;
-  G4LogicalVolume *logicTreatmentRoom;
-  G4VPhysicalVolume *ConstructPhantom(G4double CollPos);
-  G4VPhysicalVolume *ConstructDetector();
+    public:
+        G4VPhysicalVolume *physicalTreatmentRoom;
+        G4LogicalVolume *logicTreatmentRoom;
+        G4VPhysicalVolume *ConstructPhantom(G4double CollPos);
+        G4VPhysicalVolume *ConstructDetector();
+        FlashDetectorConstruction();
+  
+        virtual ~FlashDetectorConstruction();
 
-  FlashDetectorConstruction();
-  virtual ~FlashDetectorConstruction();
+        virtual G4VPhysicalVolume *Construct();
+        virtual void ConstructSDandField();
 
-  virtual G4VPhysicalVolume *Construct();
-  virtual void ConstructSDandField();
+        G4bool  SetPhantomMaterial(G4String material);
+        G4bool  SetDetectorMaterial(G4String material);
+        void SetAirGap(G4double position);
+        void SetPhantomSize(G4double sizeX, G4double sizeY, G4double sizeZ);
 
-   G4bool  SetPhantomMaterial(G4String material);
-  G4bool  SetDetectorMaterial(G4String material);
-  void SetAirGap(G4double position);
-  void SetPhantomSize(G4double sizeX, G4double sizeY, G4double sizeZ);
+        void SetDetectorThickness(G4double thickness);
+        void SetDetector_subThickness(G4double thickness_sub);
+        void SetDetectorWidth(G4double width);
+        void SetDetectorPosition(G4double position);
+        void SetAirGap_water_detector(G4double spost);
 
-  void SetDetectorThickness(G4double thickness);
-   void SetDetector_subThickness(G4double thickness_sub);
-  void SetDetectorWidth(G4double width);
-   void SetDetectorPosition(G4double position);
- void SetAirGap_water_detector(G4double spost);
-
-  G4VisAttributes *skyBlue;
-  G4VisAttributes *red;
-  G4VisAttributes *blue;
-  G4VisAttributes *green;
+        G4VisAttributes *skyBlue;
+        G4VisAttributes *red;
+        G4VisAttributes *blue;
+        G4VisAttributes *green;
 
   
-private:
+    private:
 
-  FlashDetectorMessenger* fDetectorMessenger;
-  
-  G4Material *airNist;
-  G4Material *fPhantomMaterial;
-  Applicator *Collimator;
+        FlashDetectorMessenger* fDetectorMessenger;
+        
+        G4Material *airNist;
+        G4Material *fPhantomMaterial;
+        Applicator *Collimator;
 
-  G4double fAirGap;
-  G4double fPhantomSizeX, fPhantomSizeY, fPhantomSizeZ, fPhantom_coordinateX,fPosition_coefficient;
-  G4ThreeVector fPhantomPosition;
-  G4double fDet_thickness,fDet_width,fDet_sub_thickness,fDetectorPosition,fAirGap_phantom_det;
-  G4Element *Si;
-  G4Element *C;
-  G4Material *SiC;
-  G4Material *fDetectorMaterial;
+        G4double fAirGap;
+        G4double fPhantomSizeX, fPhantomSizeY, fPhantomSizeZ, fPhantom_coordinateX,fPosition_coefficient;
+        G4ThreeVector fPhantomPosition;
+        G4double fDet_thickness,fDet_width,fDet_sub_thickness,fDetectorPosition,fAirGap_phantom_det;
+        G4Element *Si;
+        G4Element *C;
+        G4Material *SiC;
+        G4Material *fDetectorMaterial;
 
-  G4Box *fPhantom;
-
-
-  G4Box *fDet_box;
-  G4LogicalVolume *fDetLogicalVolume;
-  G4VPhysicalVolume *fDet_phys;
-
- G4Box *fDet_sub;
- G4LogicalVolume *fDet_sub_LogicalVolume;
- G4VPhysicalVolume *fDet_sub_phys;
-
-  
-  void DefineMaterials();
+        G4Box *fPhantom;
 
 
-  G4LogicalVolume *fPhantomLogicalVolume;
-  G4VPhysicalVolume *fPhant_phys;
-  G4VPhysicalVolume *fPhantom_physical;
-    
-  G4UserLimits *fStepLimit;
-  G4bool fCheckOverlaps;
- 
-  G4NistManager *nist;
+        G4Box *fDet_box;
+        G4LogicalVolume *fDetLogicalVolume;
+        G4VPhysicalVolume *fDet_phys;
+
+        G4Box *fDet_sub;
+        G4LogicalVolume *fDet_sub_LogicalVolume;
+        G4VPhysicalVolume *fDet_sub_phys;
+
+          
+        void DefineMaterials();
 
 
- 
+        G4LogicalVolume *fPhantomLogicalVolume;
+        G4VPhysicalVolume *fPhant_phys;
+        G4VPhysicalVolume *fPhantom_physical;
+          
+        G4UserLimits *fStepLimit;
+        G4bool fCheckOverlaps;
+      
+        G4NistManager *nist;
 
 };
 

@@ -42,91 +42,90 @@
 class G4VPhysicalVolume;
 
 class Applicator {
-public:
-  Applicator(G4VPhysicalVolume *);
-  ~Applicator();
 
-  G4double fFinalApplicatorXPositionFlash;
-  G4double fHightFinalApplicatorFlash;
+    public:
+        Applicator(G4VPhysicalVolume *);
+        ~Applicator();
+        G4double fFinalApplicatorXPositionFlash;
+        G4double fHightFinalApplicatorFlash;
 
-  void SetOuterRadius(G4double radius);
-   void SetApplicatorLength(G4double length);
+        void SetOuterRadius(G4double radius);
+        void SetApplicatorLength(G4double length);
 
-private:
-void ConstructCollimator(G4VPhysicalVolume *);
-
-  void FlashBeamLineVacuumSource();
-
-  void FlashBeamLineTitaniumWindows();
-  void FlashVWAlcover();
-    void FlashAlCover2();
-      void FlashExitBit();
+    private:
+        void ConstructCollimator(G4VPhysicalVolume *);
+        void FlashBeamLineVacuumSource();
+        void FlashBeamLineTitaniumWindows();
+        void FlashVWAlcover();
+        void FlashAlCover2();
+        void FlashExitBit();
         void FlashToroid();
-          void OverCover();
-            void OverCover2();
-              void MonitorChamber();
-                void Flash_connector();
-                                void Bigconnector();
-                                                void Bigconnector2();
-                                                                void Bigconnector3();
-                                                                void FlashBeamLineApplicator();
+        void OverCover();
+        void OverCover2();
+        void MonitorChamber();
+        void Flash_connector();
+        void Bigconnector();
+        void Bigconnector2();
+        void Bigconnector3();
+        void FlashBeamLineApplicator();
 
 
-  G4double fInitial_pos;
+        G4double fInitial_pos;
+        
+        G4double fInnerRadiusFirstApplicatorFlash;
+        G4VPhysicalVolume *fMotherPhys;
+
+        G4Material* Fe;
+        G4Material* PVDF;
+        G4Material* FILM;
+        G4Material* aluminumNist;
+        G4Material* PMMA;
+
+        G4double fOutRadiusVSFlash;
+        G4double fHightVSFlash;
+        G4double fXPositionVSFlash;
+        G4double fHightFTFlash;
+        
+        G4double fOutRadiusFTFlash;
+        G4double fOutRadius;
+        G4double fToroid_outRadius;
+        G4double fToroid_hight;
+        G4double fToroid_XPosition;
+        G4double fBigcover_hight;
+        G4double fBigcover_XPosition;
+        G4double fChamberpos;
   
-  G4double fInnerRadiusFirstApplicatorFlash;
-  G4VPhysicalVolume *fMotherPhys;
-
-  G4Material* Fe;
-  G4Material* PVDF;
-  G4Material* FILM;
-  G4Material* aluminumNist;
-  G4Material* PMMA;
-
-  G4double fOutRadiusVSFlash;
-  G4double fHightVSFlash;
-  G4double fXPositionVSFlash;
-  G4double fHightFTFlash;
   
-    G4double fOutRadiusFTFlash;
-    G4double fOutRadius;
-    G4double fToroid_outRadius;
-    G4double fToroid_hight;
-    G4double fToroid_XPosition;
-    G4double fBigcover_hight;
-    G4double fBigcover_XPosition;
-    G4double fChamberpos;
-  
-  
-  void SetDefaultDimensions();
+        void SetDefaultDimensions();
 
-  void ConstructApplicator();
+        void ConstructApplicator();
 
-  G4VisAttributes *blue;
-  G4VisAttributes *gray;
-  G4VisAttributes *white;
-  G4VisAttributes *red;
-  G4VisAttributes *yellow;
-  G4VisAttributes *green;
-  G4VisAttributes *darkGreen;
-  G4VisAttributes *darkOrange3;
-  G4VisAttributes *skyBlue;
-  G4VisAttributes *magenta;
+        G4VisAttributes *blue;
+        G4VisAttributes *gray;
+        G4VisAttributes *white;
+        G4VisAttributes *red;
+        G4VisAttributes *yellow;
+        G4VisAttributes *green;
+        G4VisAttributes *darkGreen;
+        G4VisAttributes *darkOrange3;
+        G4VisAttributes *skyBlue;
+        G4VisAttributes *magenta;
 
-  G4double fOuterRadiusFirstApplicatorFlash;
-  G4Tubs *fSolidFirstApplicatorFlash;
-  G4VPhysicalVolume *fPhysiFirstApplicatorFlash;
-  G4Material *fFirstApplicatorMaterialFlash;
+        G4double fOuterRadiusFirstApplicatorFlash;
+        G4Tubs *fSolidFirstApplicatorFlash;
+        G4VPhysicalVolume *fPhysiFirstApplicatorFlash;
+        G4Material *fFirstApplicatorMaterialFlash;
 
-  
-  //  Titanium Window
-  G4Tubs *solidFTFlash;
-  G4VPhysicalVolume *physiFTFlash;
-  G4Material *FTFlashMaterialFlash;
+        
+        //  Titanium Window
+        G4Tubs *solidFTFlash;
+        G4VPhysicalVolume *physiFTFlash;
+        G4Material *FTFlashMaterialFlash;
 
-  //  Vacuum Source
-  G4Tubs *solidVSFlash;
-  G4VPhysicalVolume *physiVSFlash;
-  G4Material *VSFlashMaterialFlash;
-};
+        //  Vacuum Source
+        G4Tubs *solidVSFlash;
+        G4VPhysicalVolume *physiVSFlash;
+        G4Material *VSFlashMaterialFlash;
+    };
+
 #endif

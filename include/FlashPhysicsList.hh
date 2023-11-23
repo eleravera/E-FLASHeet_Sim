@@ -31,11 +31,11 @@
 #include "G4VModularPhysicsList.hh"
 
 class FlashPhysicsList : public G4VModularPhysicsList {
-public:
-  FlashPhysicsList();
-  virtual ~FlashPhysicsList();
+    public:
+        FlashPhysicsList();
+        virtual ~FlashPhysicsList();
 
-  virtual void SetCuts();
-};
+        virtual void SetCuts();
+    };
 
 #endif

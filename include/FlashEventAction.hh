@@ -35,9 +35,7 @@
 
 class FlashRunAction;
 
-class FlashEventAction : public G4UserEventAction
-
-{
+class FlashEventAction : public G4UserEventAction {
 public:
   FlashEventAction();
 
