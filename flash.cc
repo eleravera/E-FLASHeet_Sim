@@ -46,47 +46,43 @@
 
 int main(int argc, char **argv) {
 
+    //  G4Random::setTheEngine(new CLHEP::MTwistEngine);
+
+    auto *runManager=G4RunManagerFactory::CreateRunManager();
+    G4int nThreads = 4;
+    runManager->SetNumberOfThreads(nThreads);
   
+    G4Random::setTheSeed(45698);
 
-  //  G4Random::setTheEngine(new CLHEP::MTwistEngine);
+    runManager->SetUserInitialization(new FlashDetectorConstruction);
 
-   auto *runManager=G4RunManagerFactory::CreateRunManager();
-  G4int nThreads = 4;
-  runManager->SetNumberOfThreads(nThreads);
- 
-  G4Random::setTheSeed(45698);
+    runManager->SetUserInitialization(new FlashPhysicsList);
 
-  runManager->SetUserInitialization(new FlashDetectorConstruction);
+    runManager->SetUserInitialization(new FlashActionInitialization);
 
-  runManager->SetUserInitialization(new FlashPhysicsList);
+    G4VisManager *visManager = new G4VisExecutive;
 
-  runManager->SetUserInitialization(new FlashActionInitialization);
+    visManager->Initialize();
 
-  G4VisManager *visManager = new G4VisExecutive;
-
-  visManager->Initialize();
-
-  G4UImanager *UImanager = G4UImanager::GetUIpointer();
-  G4ScoringManager::GetScoringManager();
+    G4UImanager *UImanager = G4UImanager::GetUIpointer();
+    G4ScoringManager::GetScoringManager();
   
-G4UIExecutive *ui = 0;
-  if (argc == 1) {
-    ui = new G4UIExecutive(argc, argv);
-    UImanager->ApplyCommand("/control/execute init_vis.mac");
-    ui->SessionStart();
-    delete ui;
-  }
-  else
-     {
-    G4String command = "/control/execute ";
-    G4String fileName = argv[1];
-    UImanager->ApplyCommand(command + fileName);
+    G4UIExecutive *ui = 0;
+    if (argc == 1) {
+        ui = new G4UIExecutive(argc, argv);
+        UImanager->ApplyCommand("/control/execute init_vis.mac");
+        ui->SessionStart();
+        delete ui;
+    }
+    else {
+        G4String command = "/control/execute ";
+        G4String fileName = argv[1];
+        UImanager->ApplyCommand(command + fileName);
+    }
 
-       }
-
-  delete visManager;
-  delete runManager;
-  return 0;
+    delete visManager;
+    delete runManager;
+    return 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....

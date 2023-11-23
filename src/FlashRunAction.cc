@@ -48,29 +48,23 @@ FlashRunAction::FlashRunAction() : G4UserRunAction()
 FlashRunAction::~FlashRunAction() {}
 
 void FlashRunAction::BeginOfRunAction(const G4Run *run) {
-  G4cout << "### Run " << run->GetRunID() << " start." << G4endl;
-
-  
-
-  G4RunManager::GetRunManager()->SetRandomNumberStore(false);
-}
+        G4cout << "### Run " << run->GetRunID() << " start." << G4endl;
+        G4RunManager::GetRunManager()->SetRandomNumberStore(false);
+    }
 
 void FlashRunAction::EndOfRunAction(const G4Run *run) {
-  G4int nofEvents = run->GetNumberOfEvent();
-  if (nofEvents == 0)
-    return;
+        G4int nofEvents = run->GetNumberOfEvent();
+        if (nofEvents == 0) return;
 
-
-  
-
-  if (IsMaster()) {
-    G4cout << G4endl
-           << "--------------------End of Global Run-----------------------"
-           << G4endl << "  The run was " << nofEvents << " events ";
-  } else {
-    G4cout << G4endl
-           << "--------------------End of Local Run------------------------"
-           << G4endl << "  The run was " << nofEvents << " events ";
-  }
-  
-}
+        if (IsMaster()) {
+          G4cout << G4endl
+                << "--------------------End of Global Run-----------------------"
+                << G4endl << "  The run was " << nofEvents << " events ";
+        } 
+        else {
+          G4cout << G4endl
+                << "--------------------End of Local Run------------------------"
+                << G4endl << "  The run was " << nofEvents << " events ";
+        }
+        
+    }

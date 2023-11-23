@@ -46,305 +46,281 @@
 #include "globals.hh"
 
 Applicator::Applicator(G4VPhysicalVolume *physicalTreatmentRoom)
-    : fMotherPhys(physicalTreatmentRoom),
-
-      
-      solidFTFlash(0), physiFTFlash(0) {
-  ConstructCollimator(fMotherPhys);
-
-
-  
-}
+    : fMotherPhys(physicalTreatmentRoom), solidFTFlash(0), physiFTFlash(0) {
+        
+        ConstructCollimator(fMotherPhys);
+    }
 
 Applicator::~Applicator() {}
 
 void Applicator::ConstructCollimator(G4VPhysicalVolume *) {
-  // Sets default geometry and materials
-  SetDefaultDimensions();
-   SetOuterRadius(55*mm);
-   SetApplicatorLength(300*mm);
-  // Construct the whole Applicator Beam Line
-  ConstructApplicator();
-}
+        // Sets default geometry and materials
+        SetDefaultDimensions();
+        SetOuterRadius(55*mm);
+        SetApplicatorLength(300*mm);
+        // Construct the whole Applicator Beam Line
+        ConstructApplicator();
+    }
 
 void Applicator::SetDefaultDimensions() {
 
-  white = new G4VisAttributes(G4Colour());
-  white->SetVisibility(true);
+        white = new G4VisAttributes(G4Colour());
+        white->SetVisibility(true);
 
-  blue = new G4VisAttributes(G4Colour(0., 0., 1.));
-  blue->SetVisibility(true);
+        blue = new G4VisAttributes(G4Colour(0., 0., 1.));
+        blue->SetVisibility(true);
 
-  gray = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
-  gray->SetVisibility(true);
+        gray = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
+        gray->SetVisibility(true);
 
-  red = new G4VisAttributes(G4Colour(1., 0., 0.));
-  red->SetVisibility(true);
+        red = new G4VisAttributes(G4Colour(1., 0., 0.));
+        red->SetVisibility(true);
 
-  yellow = new G4VisAttributes(G4Colour(1., 1., 0.));
-  yellow->SetVisibility(true);
+        yellow = new G4VisAttributes(G4Colour(1., 1., 0.));
+        yellow->SetVisibility(true);
 
-  green = new G4VisAttributes(G4Colour(25 / 255., 255 / 255., 25 / 255.));
-  green->SetVisibility(true);
+        green = new G4VisAttributes(G4Colour(25 / 255., 255 / 255., 25 / 255.));
+        green->SetVisibility(true);
 
-  darkGreen = new G4VisAttributes(G4Colour(0 / 255., 100 / 255., 0 / 255.));
-  darkGreen->SetVisibility(true);
+        darkGreen = new G4VisAttributes(G4Colour(0 / 255., 100 / 255., 0 / 255.));
+        darkGreen->SetVisibility(true);
 
-  darkOrange3 =
-      new G4VisAttributes(G4Colour(205 / 255., 102 / 255., 000 / 255.));
-  darkOrange3->SetVisibility(true);
+        darkOrange3 = new G4VisAttributes(G4Colour(205 / 255., 102 / 255., 000 / 255.));
+        darkOrange3->SetVisibility(true);
 
-  skyBlue = new G4VisAttributes(G4Colour(135 / 255., 206 / 255., 235 / 255.));
-  skyBlue->SetVisibility(true);
+        skyBlue = new G4VisAttributes(G4Colour(135 / 255., 206 / 255., 235 / 255.));
+        skyBlue->SetVisibility(true);
 
-  magenta = new G4VisAttributes(G4Colour(255 / 255., 0 / 255., 255 / 255.));
-  magenta->SetVisibility(true);
+        magenta = new G4VisAttributes(G4Colour(255 / 255., 0 / 255., 255 / 255.));
+        magenta->SetVisibility(true);
 
-  
-  fInitial_pos = -100*cm; //set the same position in FlashPrimaryGeneratorAction.cc
-  // Geometry  APPLICATOR DEFAULTS
+        
+        fInitial_pos = -100*cm; //set the same position in FlashPrimaryGeneratorAction.cc
+        // Geometry  APPLICATOR DEFAULTS
 
- 
+      
 
-  G4double defaultinnerRadiusFirstApplicatorFlash =
-      fOuterRadiusFirstApplicatorFlash - 5. * mm;
-   fInnerRadiusFirstApplicatorFlash = defaultinnerRadiusFirstApplicatorFlash;
+        G4double defaultinnerRadiusFirstApplicatorFlash = fOuterRadiusFirstApplicatorFlash - 5. * mm;
+        fInnerRadiusFirstApplicatorFlash = defaultinnerRadiusFirstApplicatorFlash;
 
-  // DEFAULT DEFINITION OF THE MATERIALS
+        // DEFAULT DEFINITION OF THE MATERIALS
 
-  // ELEMENTS
-  G4double density;
-  G4int ncomponents;
-  G4bool isotopes = false;
-  aluminumNist =
-      G4NistManager::Instance()->FindOrBuildMaterial("G4_Al", isotopes);
+        // ELEMENTS
+        G4double density;
+        G4int ncomponents;
+        G4bool isotopes = false;
+        aluminumNist = G4NistManager::Instance()->FindOrBuildMaterial("G4_Al", isotopes);
 
 
-  Fe = G4NistManager::Instance()->FindOrBuildMaterial("G4_Fe");
-    
-  PVDF = new G4Material("PVDF",  density=1780 *kg/m3,  ncomponents=3);
-  
-  
-  
-  PVDF->AddElement(G4NistManager::Instance()->FindOrBuildElement("C"), 34 * perCent);
-  PVDF->AddElement(G4NistManager::Instance()->FindOrBuildElement("H"), 33 * perCent);
-  PVDF->AddElement(G4NistManager::Instance()->FindOrBuildElement("F"), 33 * perCent);
+        Fe = G4NistManager::Instance()->FindOrBuildMaterial("G4_Fe");
+          
+        PVDF = new G4Material("PVDF",  density=1780 *kg/m3,  ncomponents=3);
+        
+        
+        
+        PVDF->AddElement(G4NistManager::Instance()->FindOrBuildElement("C"), 34 * perCent);
+        PVDF->AddElement(G4NistManager::Instance()->FindOrBuildElement("H"), 33 * perCent);
+        PVDF->AddElement(G4NistManager::Instance()->FindOrBuildElement("F"), 33 * perCent);
 
-  
-  
-  FILM= new G4Material("FILM", density=1430 *kg/m3, ncomponents = 4);
-	
-  FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("C"), 69 * perCent);
-  FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("H"), 3 * perCent);
-  FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("N"), 7 * perCent);
-  FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("O"), 21 * perCent);
-	
+        
+        
+        FILM= new G4Material("FILM", density=1430 *kg/m3, ncomponents = 4);
+        
+        FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("C"), 69 * perCent);
+        FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("H"), 3 * perCent);
+        FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("N"), 7 * perCent);
+        FILM->AddElement(G4NistManager::Instance()->FindOrBuildElement("O"), 21 * perCent);
+        
 
 
 
-  G4Material *galacticNist =
-      G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic", isotopes);
-  PMMA =
-      G4NistManager::Instance()->FindOrBuildMaterial("G4_PLEXIGLASS", isotopes);
+        G4Material *galacticNist = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic", isotopes);
+        PMMA = G4NistManager::Instance()->FindOrBuildMaterial("G4_PLEXIGLASS", isotopes);
 
-  G4Material *titanioNist =
-      G4NistManager::Instance()->FindOrBuildMaterial("G4_Ti", isotopes);
+        G4Material *titanioNist =  G4NistManager::Instance()->FindOrBuildMaterial("G4_Ti", isotopes);
 
 
-  // MATERIAL ASSIGNMENT
+        // MATERIAL ASSIGNMENT
 
-  // Material of the APPLICATOR Flash
-  fFirstApplicatorMaterialFlash = PMMA;
- 
-  // Titanium window
-  FTFlashMaterialFlash = titanioNist;
+        // Material of the APPLICATOR Flash
+        fFirstApplicatorMaterialFlash = PMMA;
+      
+        // Titanium window
+        FTFlashMaterialFlash = titanioNist;
 
-  // Vacuum Source
-  VSFlashMaterialFlash = galacticNist;
-}
+        // Vacuum Source
+        VSFlashMaterialFlash = galacticNist;
+    }
 
 void Applicator::ConstructApplicator() {
 
-  // Components of the Applicator
+        // Components of the Applicator
 
-  FlashBeamLineVacuumSource();
-  FlashBeamLineTitaniumWindows();
-  FlashVWAlcover();
-  FlashAlCover2();
-  FlashExitBit();
-  FlashToroid();
-  OverCover();
+        FlashBeamLineVacuumSource();
+        FlashBeamLineTitaniumWindows();
+        FlashVWAlcover();
+        FlashAlCover2();
+        FlashExitBit();
+        FlashToroid();
+        OverCover();
 
-  MonitorChamber();
-  Flash_connector();
-  Bigconnector();
-  Bigconnector2();
-  FlashBeamLineApplicator();//modify this function for applicator lenght
+        MonitorChamber();
+        Flash_connector();
+        Bigconnector();
+        Bigconnector2();
+        FlashBeamLineApplicator();//modify this function for applicator lenght
 
-
- 
-}
+    }
 
 void Applicator::FlashBeamLineVacuumSource() {
-  // ---------------------------------------------------------------//
-  //                     Vacuum Source                             //
-  // ---------------------------------------------------------------//
+        // ---------------------------------------------------------------//
+        //                     Vacuum Source                             //
+        // ---------------------------------------------------------------//
 
-  G4double phi1 = 90. * deg;
+        G4double phi1 = 90. * deg;
 
-  G4RotationMatrix rm1;
-  rm1.rotateY(phi1);
+        G4RotationMatrix rm1;
+        rm1.rotateY(phi1);
 
-  fOutRadiusVSFlash = 20 * mm;
-  const G4double innRadiusVSFlash = 0. * mm;
-   fHightVSFlash = 8 * mm;
-  const G4double startAngleVSFlash = 0. * deg;
-  const G4double spanningAngleVSFlash = 360. * deg;
-  fXPositionVSFlash = fInitial_pos-fHightVSFlash-0.055/2*mm; //0.055 is titanium window
+        fOutRadiusVSFlash = 20 * mm;
+        const G4double innRadiusVSFlash = 0. * mm;
+        fHightVSFlash = 8 * mm;
+        const G4double startAngleVSFlash = 0. * deg;
+        const G4double spanningAngleVSFlash = 360. * deg;
+        fXPositionVSFlash = fInitial_pos-fHightVSFlash-0.055/2*mm; //0.055 is titanium window
 
-  solidVSFlash =
-      new G4Tubs("VSFlash", innRadiusVSFlash, fOutRadiusVSFlash, fHightVSFlash,
-                 startAngleVSFlash, spanningAngleVSFlash);
+        solidVSFlash = new G4Tubs("VSFlash", innRadiusVSFlash, fOutRadiusVSFlash, fHightVSFlash, startAngleVSFlash, spanningAngleVSFlash);
 
-  G4LogicalVolume *logVSFlash = new G4LogicalVolume(
-      solidVSFlash, VSFlashMaterialFlash, "VSFlash", 0, 0, 0);
+        G4LogicalVolume *logVSFlash = new G4LogicalVolume(solidVSFlash, VSFlashMaterialFlash, "VSFlash", 0, 0, 0);
 
-  physiVSFlash = new G4PVPlacement(
-      G4Transform3D(rm1, G4ThreeVector((fXPositionVSFlash), 0., 0.)), "VSFlash",
-      logVSFlash, fMotherPhys, false, 0);
+        physiVSFlash = new G4PVPlacement(G4Transform3D(rm1, G4ThreeVector((fXPositionVSFlash), 0., 0.)), "VSFlash", logVSFlash, fMotherPhys, false, 0);
 
-  logVSFlash->SetVisAttributes(green);
-}
+        logVSFlash->SetVisAttributes(green);
+    }
 
 void Applicator::FlashBeamLineTitaniumWindows() {
-  // ---------------------------------------------------------------//
-  //                     Titanium Window                        //
-  // ---------------------------------------------------------------//
-  // with just this piece ssd=1.6cm
-  G4double phi2 = 90. * deg;
+        // ---------------------------------------------------------------//
+        //                     Titanium Window                        //
+        // ---------------------------------------------------------------//
+        // with just this piece ssd=1.6cm
+        G4double phi2 = 90. * deg;
 
-  G4RotationMatrix rm2;
-  rm2.rotateY(phi2);
+        G4RotationMatrix rm2;
+        rm2.rotateY(phi2);
 
-   fOutRadiusFTFlash = fOutRadiusVSFlash;
-  const G4double innRadiusFTFlash = 19 * mm;
-   fHightFTFlash = 0.055/2 * mm;
-  const G4double startAngleFTFlash = 0. * deg;
-  const G4double spanningAngleFTFlash = 360. * deg;
-  const G4double XPositionFTFlash = fInitial_pos ;
+        fOutRadiusFTFlash = fOutRadiusVSFlash;
+        const G4double innRadiusFTFlash = 19 * mm;
+        fHightFTFlash = 0.055/2 * mm;
+        const G4double startAngleFTFlash = 0. * deg;
+        const G4double spanningAngleFTFlash = 360. * deg;
+        const G4double XPositionFTFlash = fInitial_pos ;
 
-  solidFTFlash =
-      new G4Tubs("FTFlash", innRadiusFTFlash, fOutRadiusFTFlash, fHightFTFlash,
-                 startAngleFTFlash, spanningAngleFTFlash);
+        solidFTFlash = new G4Tubs("FTFlash", innRadiusFTFlash, fOutRadiusFTFlash, fHightFTFlash, startAngleFTFlash, spanningAngleFTFlash);
 
-  G4LogicalVolume *logFTFlash = new G4LogicalVolume(
-      solidFTFlash, FTFlashMaterialFlash, "FTFlash", 0, 0, 0);
+        G4LogicalVolume *logFTFlash = new G4LogicalVolume(solidFTFlash, FTFlashMaterialFlash, "FTFlash", 0, 0, 0);
 
-  physiFTFlash = new G4PVPlacement(
-      G4Transform3D(rm2, G4ThreeVector((XPositionFTFlash), 0., 0.)), "FTFlash",
-      logFTFlash, fMotherPhys, false, 0);
+        physiFTFlash = new G4PVPlacement( G4Transform3D(rm2, G4ThreeVector((XPositionFTFlash), 0., 0.)), "FTFlash", logFTFlash, fMotherPhys, false, 0);
 
-  logFTFlash->SetVisAttributes(yellow);
-}
+        logFTFlash->SetVisAttributes(yellow);
+    }
+
+
 void Applicator::FlashVWAlcover(){
 
- G4double phi2 = 90. * deg;
+        G4double phi2 = 90. * deg;
 
-  G4RotationMatrix rm2;
-  rm2.rotateY(phi2);
-
-
-  const G4double innRadius = fOutRadiusVSFlash;
-    fOutRadius = innRadius+8*mm;
-  const G4double hight = fHightVSFlash;
-  const G4double startAngle = 0. * deg;
-  const G4double spanningAngle = 360. * deg;
-  const G4double XPosition = fXPositionVSFlash ;
-
-   G4VSolid * solid =
-      new G4Tubs("cover1", innRadius, fOutRadius, hight,
-                 startAngle, spanningAngle);
-
-  G4LogicalVolume *log = new G4LogicalVolume(
-      solid, aluminumNist, "cover1log", 0, 0, 0);
-
- new G4PVPlacement(
-      G4Transform3D(rm2, G4ThreeVector((XPosition), 0., 0.)), "cover1phys",
-      log, fMotherPhys, false, 0);
-
-  log->SetVisAttributes(white);
+        G4RotationMatrix rm2;
+        rm2.rotateY(phi2);
 
 
-}
+        const G4double innRadius = fOutRadiusVSFlash;
+        fOutRadius = innRadius+8*mm;
+        const G4double hight = fHightVSFlash;
+        const G4double startAngle = 0. * deg;
+        const G4double spanningAngle = 360. * deg;
+        const G4double XPosition = fXPositionVSFlash ;
+
+        G4VSolid * solid = new G4Tubs("cover1", innRadius, fOutRadius, hight, startAngle, spanningAngle);
+
+        G4LogicalVolume *log = new G4LogicalVolume(solid, aluminumNist, "cover1log", 0, 0, 0);
+
+        new G4PVPlacement(G4Transform3D(rm2, G4ThreeVector((XPosition), 0., 0.)), "cover1phys", log, fMotherPhys, false, 0);
+
+        log->SetVisAttributes(white);
+
+    }
+
+
+
 void Applicator::FlashAlCover2(){
 
-G4double phi2 = 90. * deg;
+        G4double phi2 = 90. * deg;
 
-  G4RotationMatrix rm2;
-  rm2.rotateY(phi2);
+        G4RotationMatrix rm2;
+        rm2.rotateY(phi2);
 
-  
-  const G4double innRadius = fOutRadiusVSFlash;
+        
+        const G4double innRadius = fOutRadiusVSFlash;
 
-  const G4double hight = fHightVSFlash+fHightFTFlash;
-  const G4double startAngle = 0. * deg;
-  const G4double spanningAngle = 360. * deg;
-  const G4double XPosition = fInitial_pos+hight+fHightFTFlash;
+        const G4double hight = fHightVSFlash+fHightFTFlash;
+        const G4double startAngle = 0. * deg;
+        const G4double spanningAngle = 360. * deg;
+        const G4double XPosition = fInitial_pos+hight+fHightFTFlash;
 
-   G4VSolid * solid =
-      new G4Tubs("cover1", innRadius, fOutRadius, hight,
-                 startAngle, spanningAngle);
+        G4VSolid * solid =
+            new G4Tubs("cover1", innRadius, fOutRadius, hight,
+                      startAngle, spanningAngle);
 
-  G4LogicalVolume *log = new G4LogicalVolume(
-      solid, aluminumNist, "cover1log", 0, 0, 0);
+        G4LogicalVolume *log = new G4LogicalVolume(
+            solid, aluminumNist, "cover1log", 0, 0, 0);
 
-new G4PVPlacement(
-      G4Transform3D(rm2, G4ThreeVector((XPosition), 0., 0.)), "cover1phys",
-      log, fMotherPhys, false, 0);
+      new G4PVPlacement(
+            G4Transform3D(rm2, G4ThreeVector((XPosition), 0., 0.)), "cover1phys",
+            log, fMotherPhys, false, 0);
 
-  log->SetVisAttributes(red);
-  
-  fInitial_pos=fInitial_pos + fHightFTFlash;
-}
+        log->SetVisAttributes(red);
+        fInitial_pos=fInitial_pos + fHightFTFlash;
+    }
 void Applicator::FlashExitBit(){
 
-G4double phi2 = 90. * deg;
+        G4double phi2 = 90. * deg;
 
-  G4RotationMatrix rm2;
-  rm2.rotateY(phi2);
+        G4RotationMatrix rm2;
+        rm2.rotateY(phi2);
 
-  
-  const G4double innRadius = 0*mm;
-  fOutRadius = fOutRadiusVSFlash;
-  const G4double hight = 16/2*mm;
-  const G4double startAngle = 0. * deg;
-  const G4double spanningAngle = 360. * deg;
-  const G4double XPosition = fInitial_pos+hight;
-
-
-    G4VSolid *t1 = new G4Tubs("t1", innRadius, fOutRadius, hight,
-                 startAngle, spanningAngle);
-                             
-    G4VSolid *t2 = new G4Cons("t2", 0*mm,13/2*mm, 0*mm,38/2*mm,16.1/2*mm, startAngle,spanningAngle);
-    
-    G4RotationMatrix rotm_t2 = G4RotationMatrix();
-    rotm_t2.rotateX(0 * deg);
-    G4ThreeVector zTrans(0, 0, 0);
-
-    G4SubtractionSolid *hollowcover =
-        new G4SubtractionSolid("hollowcover_log", t1, t2, 0, zTrans);
-
-    
-    G4LogicalVolume *logic =
-        new G4LogicalVolume(hollowcover, aluminumNist, "hollowcover", 0, 0, 0);
         
-    new G4PVPlacement(
-      G4Transform3D(rm2, G4ThreeVector((XPosition), 0., 0.)), "cover1phys",
-      logic, fMotherPhys, false, 0);
+        const G4double innRadius = 0*mm;
+        fOutRadius = fOutRadiusVSFlash;
+        const G4double hight = 16/2*mm;
+        const G4double startAngle = 0. * deg;
+        const G4double spanningAngle = 360. * deg;
+        const G4double XPosition = fInitial_pos+hight;
 
-  logic->SetVisAttributes(darkOrange3);
-fInitial_pos=XPosition+hight;
-}
+
+        G4VSolid *t1 = new G4Tubs("t1", innRadius, fOutRadius, hight,
+                    startAngle, spanningAngle);
+                                
+        G4VSolid *t2 = new G4Cons("t2", 0*mm,13/2*mm, 0*mm,38/2*mm,16.1/2*mm, startAngle,spanningAngle);
+        
+        G4RotationMatrix rotm_t2 = G4RotationMatrix();
+        rotm_t2.rotateX(0 * deg);
+        G4ThreeVector zTrans(0, 0, 0);
+
+        G4SubtractionSolid *hollowcover =
+            new G4SubtractionSolid("hollowcover_log", t1, t2, 0, zTrans);
+
+        
+        G4LogicalVolume *logic =
+            new G4LogicalVolume(hollowcover, aluminumNist, "hollowcover", 0, 0, 0);
+            
+        new G4PVPlacement(
+          G4Transform3D(rm2, G4ThreeVector((XPosition), 0., 0.)), "cover1phys",
+          logic, fMotherPhys, false, 0);
+
+        logic->SetVisAttributes(darkOrange3);
+        fInitial_pos=XPosition+hight;
+    } 
+    
 void Applicator::FlashToroid(){
 
 G4double phi2 = 90. * deg;

@@ -50,29 +50,24 @@ FlashActionInitialization::~FlashActionInitialization()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void FlashActionInitialization::BuildForMaster() const {
-  FlashRunAction *runAction = new FlashRunAction;
-  SetUserAction(runAction);
-}
+        FlashRunAction *runAction = new FlashRunAction;
+        SetUserAction(runAction);
+    }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void FlashActionInitialization::Build() const {
-  SetUserAction(new FlashPrimaryGeneratorAction);
+        SetUserAction(new FlashPrimaryGeneratorAction);
 
-  FlashRunAction *runAction = new FlashRunAction;
-  SetUserAction(runAction);
+        FlashRunAction *runAction = new FlashRunAction;
+        SetUserAction(runAction);
 
-  FlashEventAction *eventAction = new FlashEventAction();
-  
-  SetUserAction(eventAction);
-   
-  
-  SetUserAction(new FlashSteppingAction(eventAction));
-    
-
-  
-  
-  
-}
+        FlashEventAction *eventAction = new FlashEventAction();
+        
+        SetUserAction(eventAction);
+        
+        
+        SetUserAction(new FlashSteppingAction(eventAction));
+    }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
